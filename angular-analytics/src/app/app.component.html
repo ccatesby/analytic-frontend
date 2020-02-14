@@ -1,11 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="#">Navbar</a>
+  <div class="container-fluid">
+  <a class="navbar-brand" routerLink="#">Analytics Dashboard</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" routerLink="/page1">Page 1 <span class="sr-only">(current)</span></a>
-    </div>
-  </div>
+  <ul class="nav navbar-nav">
+    <li class="nav-item active"><a class="nav-link" routerLink="/analytics">Home</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Page 1</a></li>
+    <li class="nav-item"><a class="nav-link" href="#">Page 2</a></li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <li class="nav-item"><a href="#" class="nav-link" routerLink="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+  </ul>
+</div>
 </nav>
+
+<router-outlet #routerOutlet="outlet"></router-outlet>
