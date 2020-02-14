@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from '../app/login/login.component';
 import { HttpErrorHandler }     from './http-error-handler.service';
 import { AuthInterceptor } from '../app/interceptors/auth.interceptors';
+import { OverviewComponent } from './overview/overview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AnalyticsComponent,
     LoginComponent,
+    OverviewComponent,
   ],
   imports: [
     BrowserModule,
