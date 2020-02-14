@@ -1,6 +1,6 @@
-import { Component }        from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService }      from './auth.service';
+import { Component } from '@angular/core';
+import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -10,22 +10,25 @@ import { AuthService }      from './auth.service';
 export class LoginComponent {
   message: string;
 
-  constructor(public authService: AuthService, public router: Router) {
+  constructor(public authService: AuthService) {
     this.setMessage();
+  }
+  isLoggedIn$: Observable<boolean>;
+  ngOnInit() {
+    this.isLoggedIn$ = this.authService.isUserLoggedIn;
   }
 
   setMessage() {
-    this.message = 'Logged ' + (this.authService.isLoggedIn ? 'in' : 'out');
+    this.message = 'You Are Logged ' + (this.isLoggedIn$ ? 'in' : 'out');
   }
 
   login() {
     this.message = 'Trying to log in ...';
-
+    
     this.authService.login().subscribe((calue) => {
 
       this.setMessage();
-      if (this.authService.isLoggedIn) {
-      }
+
     });
   }
 

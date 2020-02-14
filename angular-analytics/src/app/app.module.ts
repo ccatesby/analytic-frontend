@@ -6,7 +6,6 @@ import { AnalyticsComponent } from '../app/analytics/analytics.component';
 import { AppComponent } from './app.component';
 import { LoginComponent } from '../app/login/login.component';
 import { HttpErrorHandler }     from './http-error-handler.service';
-import { AuthService } from '../app/login/auth.service';
 import { AuthInterceptor } from '../app/interceptors/auth.interceptors';
 
 @NgModule({
