@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Analytics } from '../analytics/analytics';
-
+import { Analytics } from '../analytics/analytics'
 @Injectable()
 export class OverviewService {
-  analyticsUrl = 'api/views';  
+  analyticsUrl = 'api/analytics';  
 
   constructor(
     private http: HttpClient) {

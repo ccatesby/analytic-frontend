@@ -6,7 +6,7 @@ import { HttpErrorHandler, HandleError } from '../http-error-handler.service';
 
 @Injectable()
 export class AnalyticService {
-  analyticsUrl = 'api/views';  
+  analyticsUrl = 'api/analytics';  
   handleError: HandleError;
 
   constructor(
@@ -15,7 +15,10 @@ export class AnalyticService {
     this.handleError = httpErrorHandler.createHandleError('AnalyticsService');
   }
 
-  getAnalytics (): Observable<Analytics[]> {
-    return this.http.get<Analytics[]>(this.analyticsUrl)
+  getAnalytics (): Observable<Analytics> {
+    return this.http.get<Analytics>(this.analyticsUrl, {
+      params: {
+        pagePath: '/blog',
+      }})
   }
 }

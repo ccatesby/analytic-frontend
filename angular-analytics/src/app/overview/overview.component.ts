@@ -18,9 +18,8 @@ export class OverviewComponent implements OnInit {
   }
 
   getOverView(): void {
-    console.log(this.error);
     this.overviewService.getOverView()
-      .subscribe(analytics => (this.analytics = analytics.data),
+      .subscribe(analytics => (this.analytics = analytics.count.total),
         error => this.error = error.statusText);
   }
 }
