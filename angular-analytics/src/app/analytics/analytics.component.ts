@@ -2,6 +2,8 @@ import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild, ViewEncapsu
 import * as d3 from 'd3';
 import { Analytics } from './analytics';
 import { AnalyticService } from './analytics.service';
+import { ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common'; 
 
 @Component({
 
@@ -16,16 +18,27 @@ export class AnalyticsComponent implements  OnInit  {
   @Input()
   data: Analytics;
   error: string;
+  pathUrl: string;
   margin = {top: 20, right: 20, bottom: 60, left: 50};
+  availablePaths = ["home", "search", "details", "blog"];
 
-  constructor(private analyticService: AnalyticService, private ref: ElementRef) {}
 
-  ngOnInit() {
-    this.getAnalytics();
+  constructor(private analyticService: AnalyticService, 
+    private route:ActivatedRoute, 
+    private location: Location) {}
+
+  changePath(value: string) {
+    this.pathUrl = value;
+    this.location.replaceState(`/${value}`);
+    this.getAnalytics(value);
   }
 
-  getAnalytics(): void {
-    this.analyticService.getAnalytics()
+  ngOnInit() {
+    this.getAnalytics(this.route.snapshot.params['path']);
+  }
+
+  getAnalytics(pathUrl: string): void {
+    this.analyticService.getAnalytics(pathUrl)
       .subscribe(analytics => { (this.data = analytics); this.createChart(); console.log(this.data)},
         error => this.error = error.statusText);
   }
@@ -36,8 +49,8 @@ export class AnalyticsComponent implements  OnInit  {
     const data = this.data;
 
     const svg = d3.select(element).append('svg')
-    .attr('width', element.offsetWidth)
-    .attr('height', element.offsetHeight);
+      .attr('width', element.offsetWidth)
+      .attr('height', element.offsetHeight);
 
     const contentWidth = element.offsetWidth - this.margin.left - this.margin.right;
     const contentHeight = element.offsetHeight - this.margin.top - this.margin.bottom;

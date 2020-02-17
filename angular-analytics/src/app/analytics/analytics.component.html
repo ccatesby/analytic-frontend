@@ -1,4 +1,18 @@
 <h1>Analytics</h1>
 {{error}}
-<div></div>
-<div #barchart class="d3-chart"></div>
+
+<div *ngIf="pathUrl">
+    <div  #barchart class="d3-chart"></div>
+</div>
+<div class="row" *ngIf="!error">
+    <div class="col">
+    <select (change)="changePath($event.target.value)" class="btn btn-outline-primary" >
+      <option value="0">--Select Page--</option>
+      <option *ngFor="let summary of availablePaths" value={{summary}}>
+        {{summary}}
+      </option>
+    </select>
+  </div>
+</div> 
+
+
