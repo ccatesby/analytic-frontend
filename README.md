@@ -1,4 +1,4 @@
-Platform that enables visitors to find and book recommended hotels near conference venue's.
+Simple analysis dashboard to display collected page view data.
 
 To run:
 
