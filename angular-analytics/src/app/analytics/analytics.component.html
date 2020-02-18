@@ -1,18 +1,35 @@
+<div class="container">
 <h1>Analytics</h1>
-{{error}}
-
-<div *ngIf="pathUrl">
-    <div  #barchart class="d3-chart"></div>
-</div>
-<div class="row" *ngIf="!error">
-    <div class="col">
-    <select (change)="changePath($event.target.value)" class="btn btn-outline-primary" >
-      <option value="0">--Select Page--</option>
-      <option *ngFor="let summary of availablePaths" value={{summary}}>
-        {{summary}}
-      </option>
-    </select>
+<p>{{error}}</p>
+  <div class="row" *ngIf="pathUrl">
+    <div class="card">
+      <h1>{{data.count.totalUsers || 0 }}</h1>
+      <p class="card-text">Active Users since {{timeSince}}</p>
+    </div>
+    <div class="card">
+      <h1>{{(data.count.returningUsers / data.count.totalUsers * 100 | number:'1.0-0') || 0}} %</h1>
+      <p class="card-text">Returning Users </p>
+    </div>
+    </div>
+  <div *ngIf="pathUrl" class="row">
+      <div #barchart class="d3-chart"></div>
   </div>
-</div> 
-
-
+  <div class="row" *ngIf="!error">
+      <div class="card">
+        <h6>Page Paths</h6>
+        <select (change)="changePath($event.target.value)" class="btn btn-outline-primary" >
+          <option value="0">--Select Page--</option>
+          <option *ngFor="let path of availablePaths" value={{path}}>
+            {{path}}
+          </option>
+        </select>
+    </div>
+    <div class="card">
+      <h6>Start Date</h6>
+      <input type="date" id="start" name="trip-start"
+          value="2020-02-02"
+          (change)="changeStartDate($event.target.value)"
+          min="2020-02-02" max="2020-17-02">
+    </div>
+  </div> 
+</div>

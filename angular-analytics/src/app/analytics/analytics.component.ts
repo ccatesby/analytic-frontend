@@ -4,7 +4,7 @@ import { Analytics } from './analytics';
 import { AnalyticService } from './analytics.service';
 import { ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common'; 
-
+import * as moment from 'moment/moment';
 @Component({
 
   encapsulation: ViewEncapsulation.None,
@@ -16,12 +16,19 @@ export class AnalyticsComponent implements  OnInit  {
   @ViewChild('barchart') private chartContainer;
 
   @Input()
-  data: Analytics;
+  data: Analytics = null;
   error: string;
   pathUrl: string;
   margin = {top: 20, right: 20, bottom: 60, left: 50};
+  //TODO: get available page paths from api.
   availablePaths = ["home", "search", "details", "blog"];
+  //TODO: find min startdate of result data set.
+  startDate: number = 1580688000000;
+  timeSince: string = null;
 
+  setTimeSince(startDate: number) {
+    this.timeSince = moment(startDate).fromNow();
+  }
 
   constructor(private analyticService: AnalyticService, 
     private route:ActivatedRoute, 
@@ -30,16 +37,24 @@ export class AnalyticsComponent implements  OnInit  {
   changePath(value: string) {
     this.pathUrl = value;
     this.location.replaceState(`/${value}`);
-    this.getAnalytics(value);
+    this.getAnalytics(value, this.startDate);
+  }
+
+  changeStartDate(value) {
+    var d = new Date(value);
+    this.startDate = d.getTime();
+    this.setTimeSince(this.startDate);
+    this.getAnalytics(this.pathUrl, this.startDate);
   }
 
   ngOnInit() {
-    this.getAnalytics(this.route.snapshot.params['path']);
+    this.setTimeSince(this.startDate);
+    this.getAnalytics(this.route.snapshot.params['path'], this.startDate);
   }
 
-  getAnalytics(pathUrl: string): void {
-    this.analyticService.getAnalytics(pathUrl)
-      .subscribe(analytics => { (this.data = analytics); this.createChart(); console.log(this.data)},
+  getAnalytics(pathUrl: string, startDate: number): void {
+    this.analyticService.getAnalytics(pathUrl, startDate)
+      .subscribe(analytics => { (this.data = analytics); this.createChart(); },
         error => this.error = error.statusText);
   }
 

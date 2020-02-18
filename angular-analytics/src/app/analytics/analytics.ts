@@ -10,8 +10,8 @@ export interface Result {
   count: number;
 }
 
-
 export interface Count {
-  total: number;
-  returns: number;
+  totalPageVisits: number;
+  returningUsers: number;
+  totalUsers: number;
 };

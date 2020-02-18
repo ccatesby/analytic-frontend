@@ -5,6 +5,7 @@ import { AnalyticsComponent } from './analytics/analytics.component'
 import { OverviewComponent } from './overview/overview.component'
 
 const routes: Routes = [
+  { path: '', component: OverviewComponent },
   { path: 'overview', component: OverviewComponent },
   { path: 'analytics/:path', component: AnalyticsComponent },
   { path: 'analytics', component: AnalyticsComponent },

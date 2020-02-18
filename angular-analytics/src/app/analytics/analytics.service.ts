@@ -15,11 +15,12 @@ export class AnalyticService {
     this.handleError = httpErrorHandler.createHandleError('AnalyticsService');
   }
 
-  getAnalytics (pathUrl: string): Observable<Analytics> {
-    console.log(pathUrl);
+  getAnalytics (pathUrl: string, startDateNumber: number): Observable<Analytics> {
+    var startDate = startDateNumber ? { startDate: startDateNumber.toString()} : {};
     return this.http.get<Analytics>(this.analyticsUrl, {
       params: {
         pagePath: `/${pathUrl}`,
+        ...(startDate),
       }})
   }
 }
